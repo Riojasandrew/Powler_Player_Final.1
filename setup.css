@@ -1,0 +1,197 @@
+/* Powler Player design buil setup */
+
+/* Reset and prevent layout issues for user running the program */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.4;
+
+  /* Background image themes already handle image, this adds overlay vibe */
+  background-color: #0b0f19;
+  color: #e9eefc;
+
+  /* background images fit on page */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Soft overlay so text is always readable on images */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 12, 20, 0.70);
+  backdrop-filter: blur(6px);
+  z-index: -1;
+}
+
+/* Layout container */
+header, main, footer {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 18px 16px;
+}
+
+/* header location */
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 22px;
+}
+/* text design size */
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
+}
+
+/* Nav size & locatoin*/
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+nav a {
+  color: #e9eefc;
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 10px;
+  transition: transform 0.12s ease, background 0.12s ease;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.10);
+  transform: translateY(-1px);
+}
+
+/* Main content card */
+main section {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Headings */
+h2 {
+  margin: 18px 0 10px;
+  font-size: 1.1rem;
+  /* spacing between lettering */
+  letter-spacing: 0.2px;
+}
+
+/* Labels + search */
+label {
+  display: inline-block;
+  margin-bottom: 6px;
+  opacity: 0.9;
+}
+/* Color/Design */
+input[type="search"] {
+  width: min(520px, 100%);
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  color: #e9eefc;
+  outline: none;
+}
+/* Text Color */
+input[type="search"]::placeholder {
+  color: rgba(233, 238, 252, 0.65);
+}
+
+/* Buttons designs displayed to users */
+button {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e9eefc;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease, border 0.12s ease;
+}
+
+button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0px);
+}
+
+/* “Now Playing” + Mood readouts */
+#now_playing, #mood_status {
+  margin: 14px 0 8px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Range slider */
+input[type="range"] {
+  width: min(320px, 100%);
+  accent-color: #9bb4ff;
+}
+
+/* Details dropdown (Theme picker / About Me) */
+details {
+  margin-top: 14px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+/* Tab drop */
+summary {
+  padding: 12px 14px;
+  cursor: pointer;
+  /* Removes the default triangle  */
+  list-style: none;
+  user-select: none;
+  font-weight: 600;
+}
+
+details > section {
+  padding: 12px 14px 14px;
+}
+
+/* Theme buttons inside picker look like a grid */
+#theme_picker section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+/* Footer */
+footer {
+  opacity: 0.8;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+/* Theme Backgrounds Images*/
+body.space_theme { background-image: url("./images/galaxy_theme.png"); }
+body.nature_theme { background-image: url("./images/cartoon-nature-theme.png"); }
+body.mountain_theme { background-image: url("./images/snowy-mountain.png"); }
+body.city_theme { background-image: url("./images/afternoon-view.png"); }
+body.glowup_theme { background-image: url("./images/glowing_sphere.png"); }
+body.ocean_theme { background-image: url("./images/ocean-view.png"); }
+body.sci-fi_theme { background-image: url("./images/travel-sci-theme.png"); }
+body.midnightdrive_theme { background-image: url("./images/midnight-city-drive.png"); }

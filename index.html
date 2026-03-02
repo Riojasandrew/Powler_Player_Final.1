@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Powler Player</title>
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="setup.css">
+    
+</head>
+
+<body>
+
+    <!-- Header Section Positiong -->
+    <header>
+        <h1 style="text-align: center;">Powler Player</h1>
+
+        <nav>
+            <!-- Navigation Links -->
+            <a href="index.html">Home</a> |
+            <a href="about.html">About</a> |
+            <a href="features.html">Features</a> |
+            <a href="contact.html">Contact</a>
+            <!-- link to about me  -->
+            
+        </nav>
+    </header>   
+
+    <!-- Main Content Section -->
+     <main>
+        
+        <section>
+           
+            <!-- This is where the user will interact with the music player and website features -->
+            <!-- Connects text to the input when user uses search bar -->
+            <label for="search">Search music</label>
+            <input type="search" id="search" placeholder="Search Song">
+        
+            <!-- Recommended Songs -->
+            <!-- rec is just a call ID for javascript -->
+            <!-- Let user know what songs AI recommend -->
+             <h2>Recommended Songs for You</h2>
+            <button id="rec-1">Recommended Song</button>
+            <button id="rec-2">Recommended Song</button>
+            <button id="rec-3">Recommended Song</button>
+
+            <!-- display to the user song time -->
+             <div>
+                <!--span: styling inside a text/sentence -->
+                <span id="current_time">0.00</span>
+                <input type="range" id="seek_bar" min="0" max="100" value="0">
+                <span id="duration_time">0.00</span>
+             </div>
+
+            <!--Music Audio Control-->
+            <!-- ID will connect to Java to target that function -->
+            <p id="now_playing">Now Playing: </p>
+            <p id="mood_status">Mood: Tell me</p>
+            <!-- Creating a AI Mood Input for user -->
+             <lable for="mood_input">What's on your mind today?</lable>
+             <!--Get users mood information-->
+             <input type="text" id="mood_input" placeholder="Ex: hyped, sad, stressed, chill">
+             <button id= "mood_btn">Get AI Recommendation</button>
+             <p id="aoi_message">AOI: Tell me your mod and I'll recommend songs for you.</p>
+            <button id="play_btn">Play</button>
+            <button id="pause_btn">Pause</button>
+
+            <!-- Volume adjustment and Mute display to user-->
+            <button id="mute_btn">Mute/Volume</button>
+            <!-- Shuffle, Next, Previous button display -->
+            <button id="shuffle_btn">Shuffle</button>
+            <button id="prev_btn">⏮</button>
+            <button id="next_btn">⏭</button>
+            
+
+            <button id="library_btn">Library</button>
+            <button id="loop_btn">Loop</button>
+            <label for="volume_adjustment">Volume</label>
+            <input type="range" id="volume_adjustment" min="0" max="100" value="75">
+            <audio id="audio_player"></audio>
+
+            <!-- Theme picker -->
+            <!-- Gives the users choice to pick they want -->
+            <h2>Themes for You</h2>
+             <details id="theme_picker">
+                <!-- This is a dropdown for theme selection -->
+                 <!-- Meaning it's clickable for open and close label -->
+                <!-- Get more information for geeksforgeeks -->
+                <!-- https://www.geeksforgeeks.org/html/html-5-summary-tag/ --> 
+                <summary>Change Background Theme</summary>
+                <section>
+                    <!-- Theme pick for users -->
+                     <!-- Pull data for JavaScript -->
+                    <!-- Add button function to java to work correctly-->
+                    <button data-theme="space_theme">Space theme</button>
+                    <button data-theme="nature_theme">Nature theme</button>
+                    <button data-theme="mountain_theme">Mountain theme</button>
+                    <button data-theme="city_theme">City theme</button>
+                    <button data-theme="glowing_sphere">Glowup theme</button>
+                    <button data-theme="ocean_theme">Ocean theme</button>
+                    <button data-theme="sci-fi_theme">Sci-Fi theme</button>
+                    <button data-theme="midnightdrive_theme">Drive theme</button>
+                </section>
+             </details>
+        </section>
+        
+        <!-- about me section user clicks on link -->
+         <details id="about_me">
+            <!--pull drop down for user telling about me -->
+            <!-- CSS will change the way the users will see this -->
+            <summary>About Me</summary>
+            <section>
+                <h2> Hello, nice to meet you I'm Andrew Riojas</h2>
+                <!-- This is where I will talk about myself and my project -->
+                <p>I'm the creator and designer of Powler Player - music has been a passion of mine,
+                 and I wanted to create a platform that is AI-driven to enhance the listening experience and help you
+                  discovering new tunes that match your mood and possible help you through your day!</p>
+            </section>
+        </details>
+
+     </main>
+
+     <footer>
+        <!-- Footer Content -->
+         <!-- This is the copyright notice -->
+        <p>&copy; 2026 Powler Player</p>
+     </footer>
+
+         <!-- This is just the link for the javascript file -->
+<!-- The reason it's below is it allows the browser to load first before running the program -->
+<script src="script.js"></script>
+</body>
