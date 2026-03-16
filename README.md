@@ -24,14 +24,17 @@ During this phase I expanded the music library from 3 songs to 11 songs. I also 
 February 17 – February 20, 2026
 I added a dynamic recommendation system to the player. Three recommendation buttons were created that display suggested songs. These buttons update depending on which songs are selected by the program. This setup was designed so it could later work with the AI mood system.
 --------------------------------------------------------------------------------------------------------------
-Powler Player — Development Update Log
+
 February 22, 2026
+
 Continued improving the overall project structure. I organized the HTML layout better and made adjustments to the main JavaScript file so the code would be easier to manage and expand later.
 
 February 25, 2026
+
 Worked on improving the website layout and navigation. Additional pages were connected to the navigation bar including Home, About, Features, and Contact to make the website feel more complete.
 
 February 26 – February 27, 2026
+
 •	Expanded the JavaScript music player system. More controls were added including:
 •	Play and pause
 •	Shuffle
@@ -42,9 +45,11 @@ February 26 – February 27, 2026
 At this stage the audio files were fully connected to the HTML audio element so songs could play directly from the website.
 
 February 28, 2026
+
 Spent time improving the documentation and planning of the project. I worked on describing the target audience and writing some project notes for the README. I also added helper functions and debugging checks to make sure the JavaScript code runs more smoothly.
 
 March 1, 2026
+
 This was a big update for the project. Additional major features were added including:
 Displaying the current time and total duration of the song
 Implementing an AI-style mood detection system
@@ -53,12 +58,14 @@ Converting the song list into a structured song database with mood tags
 Adding three new songs to the music library
 Adding comments throughout the JavaScript file so the code is easier to understand
 March 6th, 2026
+
 Today several small improvements were made to the Powler Player project.
 Improved the song search system so the search bar can better match songs from the music list.
 Updated how song titles are displayed so the .mp3 file extension no longer appears to the user.
 
 
 March: 3/11/26 – 3/15/2026
+
 Looked into AI recommendation system for Powler Player and felt the system technically worked but felt too random. Even though the AI was matching moods using certain keys and energy levels... It didn’t feel very personal. Because of that I am improving the AI response system making it more natural instead of only showing mood was detected. In addition, I am implementing visual feature for  Powler Player art designs.
 •	Created a new musicImages folder to store display art for songs.
 •	Connected images to correct songs (one image looking into)
