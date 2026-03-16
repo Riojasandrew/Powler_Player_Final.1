@@ -63,3 +63,4 @@ Looked into AI recommendation system for Powler Player and felt the system techn
 •	Expanded the songs database in JavaScript to include an image property for each track.
 •	Updated the loadThenPlay() function so the displayed image changes whenever a new song plays.
 Overall these updates focuses on improving user experience between UI and AI
+.
