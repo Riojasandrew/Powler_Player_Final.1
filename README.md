@@ -2,15 +2,19 @@ Powler Player — Project Development Timeline
 January 26 – January 31, 2026
 
 During this week I looked at other music platforms like YouTube Music and Spotify to understand how their players work and what features they have. After researching, I started building the basic HTML structure for Powler Player. This included creating the main layout of the website, adding navigation links, and organizing the project folders. I also created an audio folder where the music files for the player would be stored.
+
 --------------------------------------------------------------------------------------------------------------
 February 1 – February 7, 2026
+
 During this stage I focused on getting the audio player working with JavaScript. I added the basic music controls such as:
 Play and pause buttons
 Next and previous song navigation
 Shuffle functionality so songs can play randomly
 These features allowed the player to actually play songs and gave the website its first interactive functionality.
+
 --------------------------------------------------------------------------------------------------------------
 February 8 – February 12, 2026
+
 Next I expanded the music controls and added more features to the player. This included:
 A loop function so songs can repeat
 A volume slider so users can adjust sound levels
@@ -19,10 +23,14 @@ I also improved the code that keeps track of things like the current song, loop 
 
 --------------------------------------------------------------------------------------------------------------
 February 13 – February 15, 2026
+
 During this phase I expanded the music library from 3 songs to 11 songs. I also continued refining the layout of the player and started planning how the AI mood recommendation system would work. This involved thinking about how songs would be tagged with moods and how the program could choose songs based on what the user types.
+
 --------------------------------------------------------------------------------------------------------------
 February 17 – February 20, 2026
+
 I added a dynamic recommendation system to the player. Three recommendation buttons were created that display suggested songs. These buttons update depending on which songs are selected by the program. This setup was designed so it could later work with the AI mood system.
+
 --------------------------------------------------------------------------------------------------------------
 
 February 22, 2026
