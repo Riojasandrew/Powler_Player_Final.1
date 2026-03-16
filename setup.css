@@ -1,5 +1,6 @@
 /* Powler Player design buil setup */
-
+/* All information to make this is at  
+  https://www.w3schools.com/css/default.asp*/
 /* Reset and prevent layout issues for user running the program */
 * { box-sizing: border-box; }
 html, body { height: 100%; }

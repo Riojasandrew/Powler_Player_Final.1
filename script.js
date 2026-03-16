@@ -1,11 +1,13 @@
 // Here we will write the buttons and functions for the index website.
 // We will also write the code for the music player and the AI
 // not seen to the player but, running in hte background
+// https://www.w3schools.com/js/default.asp
 console.log("Powler Player is running..");
 
 // grab key elements for index.html
 // Ones below are for the music player
 const audioPlayer = document.getElementById("audio_player");
+const songDisplay = document.getElementById("song_display");
 const nowPlaying = document.getElementById("now_playing");
 const moodStatus = document.getElementById("mood_status");
 
@@ -38,22 +40,25 @@ const recButtons = [
 // Here will be the song list for players
 // replaced old versoin with new still pulling from file
 // placing mood type for AI uses
+// Update added images to music being displayed 
+// replaced old version with new still pulling from file
 const songs = [
-  { file: "Error_ You.mp3", moods: ["sad", "calm", "tired"], energy: 2 },
-  { file: "Funk and Gone.mp3", moods: ["happy", "chill", "fun"], energy: 3 },
-  { file: "Final Fight.mp3", moods: ["hype", "focus", "angry"], energy: 5 },
-  { file: "Beneath the Falling Sky.mp3", moods: ["calm", "focus"], energy: 3 },
-  { file: "Falling Out of Frame.mp3", moods: ["sad", "focus"], energy: 2 },
-  { file: "Fire.mp3", moods: ["hype", "angry"], energy: 5 },
-  { file: "Keep It Down.mp3", moods: ["focus", "calm"], energy: 3 },
-  { file: "Let me forget.mp3", moods: ["sad", "tired"], energy: 2 },
-  { file: "Light Me Up.mp3", moods: ["happy", "hype"], energy: 4 },
-  { file: "My Hidden Plan.mp3", moods: ["focus", "mystery", "calm"], energy: 3 },
-  { file: "Star in the Dark.mp3", moods: ["calm", "sad", "chill"], energy: 2 },
+  { file: "Error_ You.mp3", image: "bright_star.png", moods: ["sad", "calm", "tired"], energy: 2 },
+  { file: "Funk and Gone.mp3", image: "forget_peace.png", moods: ["happy", "chill", "fun"], energy: 3 },
+  { file: "Final Fight.mp3", image: "FinalBattle.png", moods: ["hype", "focus", "angry"], energy: 5 },
+  { file: "Beneath the Falling Sky.mp3", image: "falling_sky.png", moods: ["calm", "focus"], energy: 3 },
+  { file: "Falling Out of Frame.mp3", image: "frame_pic.png", moods: ["sad", "focus"], energy: 2 },
+  { file: "Fire.mp3", image: "heart_burn.png", moods: ["hype", "angry"], energy: 5 },
+  { file: "Keep It Down.mp3", image: "keep_down.png", moods: ["focus", "calm"], energy: 3 },
+  { file: "Let me forget.mp3", image: "bright_star.png", moods: ["sad", "tired"], energy: 2 },
+  { file: "Light Me Up.mp3", image: "lighten_up.png", moods: ["happy", "hype"], energy: 4 },
+  { file: "My Hidden Plan.mp3", image: "planned.png", moods: ["focus", "mystery", "calm"], energy: 3 },
+  { file: "Star in the Dark.mp3", image: "bright_star.png", moods: ["calm", "sad", "chill"], energy: 2 },
+
   // 3 new songs added for user
-  { file: "We might die, lock-in.mp3", moods: ["focus", "hype"], energy: 4 },
-  { file: "Devil In Sheep Clothing.mp3", moods: ["angry", "hype", "focus"], energy: 5 },
-  { file: "So easy.mp3", moods: ["happy", "chill", "calm"], energy: 3 }
+  { file: "We might die, lock-in.mp3", image: "get_it.png", moods: ["focus", "hype"], energy: 4 },
+  { file: "Devil In Sheep Clothing.mp3", image: "sheep_clothing.png", moods: ["angry", "hype", "focus"], energy: 5 },
+  { file: "So easy.mp3", image: "too_easy.png", moods: ["happy", "chill", "calm"], energy: 3 }
 ];
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -62,13 +67,24 @@ let currentSongIndex = 0;
 // recommended song 0, 1, 2
 let recommendedSongIndex = [];
 
-// Helper: load a song into the player and play it
+// Loads a song into the audio, resets UI, and then automatcally does playback
+// Updated now display image with song once loaded
 function loadThenPlay(filename){
+
+    const song = songs.find(s => s.file === filename);
+
     audioPlayer.src = "audio/" + filename;
     audioPlayer.load();
     audioPlayer.play();
 
-    nowPlaying.textContent = "Now Playing: " + filename;
+    // display tothe user what is playing
+    // replaced code
+    nowPlaying.textContent = "Now Playing: " + filename.replace(".mp3", "");
+
+    // Change song image when new song plays
+    if(songDisplay && song){
+        songDisplay.src = "musicImages/" + song.image;
+    }
 
     // Reset UI while loading
     seekBar.value = 0;
@@ -94,6 +110,7 @@ recButtons.forEach((btn, slotIndex) => {
     // Get the song index for this recommendation slot
     const songIndex = recommendedSongIndex[slotIndex];
     const filename = songs[songIndex];
+    btn.textContent = filename.file.replace(".mp3", "");
 
     // When user clicks the recommendation button, it will load and play the song
     btn.addEventListener("click", () => {
@@ -168,7 +185,7 @@ function formTime(seconds){
     // returns time string
     return `${m}:${String(s).padStart(2, "0")}`;
 }
-
+// tracks if the user is actually dragging the seek bar
 let isSeeking = false;
 
 // The data will load for the user, duration because avaiable (seen)
@@ -181,9 +198,11 @@ audioPlayer.addEventListener("timeupdate", () =>{
     updateProgressUI();
 });
 
-// UPDATED UI MUSIC PROGRESS
+// Updated UI msuc progress
 function updateProgressUI(){
+    // Gets playback time of the song
     const current = audioPlayer.currentTime || 0;
+    // get total duartion of the song 
     const duration = audioPlayer.duration || 0;
 
     // update text
@@ -200,27 +219,38 @@ function updateProgressUI(){
 seekBar.addEventListener("mousedown", () =>{
     isSeeking = true;
 });
+// pause progress so it doesn't cause issue for the user
 seekBar.addEventListener("touchstart", () => {
     isSeeking = true;
 });
 
 // user drags the bar (live)
+// Won't change teh song position only updates the UI
 seekBar.addEventListener("input", () => {
+    // Get total song uration
     const duration = audioPlayer.duration || 0;
+    // Only calculates preview IF duratoin time is appearing
     if (duration > 0){
+        // Convert slider value
+        // Convert precentage into actual seconds
+        // Display preview time (mm:ss)
         const percent = Number (seekBar.value) / 100;
         const previewTime = percent * duration;
         currentTimeEl.textContent = formTime(previewTime);
     }
 });
 
-// works after relases
+// Function is to moves the song to the correct time users wants it.
 function finishSeek() {
+    // Total duration of song
     const duration = audioPlayer.duration || 0;
     if (duration > 0) {
+        // Convert slider value into decimal
         const percent = Number(seekBar.value) / 100;
+        // Will set audio position to selected time
         audioPlayer.currentTime = percent * duration;
     }
+    // progress updates to resume automatically 
     isSeeking = false;
 }
 
@@ -304,7 +334,7 @@ console.log("Theme buttons:", themeButtons.length);
 ////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////// AI MOOD Inference & Recommendations ///////////////////////////
-//////////////////////// AI MOOD Inference & Recommendations ///////////////////////////
+// AI behavior
 const moodInput = document.getElementById("mood_input");
 const moodBtn = document.getElementById("mood_btn");
 const aoiMessage = document.getElementById("aoi_message");
@@ -326,9 +356,11 @@ function typeMood(text) {
   for (const rule of rules) {
     if (rule.keywords.some(k => t.includes(k))) return rule.mood;
   }
+  // IF their isn't a keyword match -> defaults to calm
   return "calm";
 }
-
+// Generates 3 song recommendatoins 
+// Mood tag for AI recommandatoin
 function recommendSongs(targetMood) {
   const moodEnergy = {
     hype: 5, angry: 5, happy: 4, focus: 3, calm: 2, sad: 2, tired: 1
@@ -354,8 +386,8 @@ function updateRecButtonsWithAI(indexes) {
 
     const songIdx = indexes[slot];
     const song = songs[songIdx];
-
-    btn.textContent = song ? song.file : "Recommended Song";
+    // Code implied instead of seeing recommended song you(user) will now see song names
+    btn.textContent = song ? song.file.replace(".mp3", "") : "Recommended Song";
 
     // Overwrite click action (no cloning needed)
     btn.onclick = () => {
@@ -366,6 +398,18 @@ function updateRecButtonsWithAI(indexes) {
   });
 }
 
+// Update messages are less random and more personal
+// Given user a explanation why it picked the song for user
+const moodMessages = {
+    hype: "AOI: You appeared to be hyped! I picked you some songs that tracks that vibe!",
+    focus: "AOI: It appears you are wanting be in a focus mood so, I picked you some songs that tracks that vibe!",
+    calm: "AOI: Ah yes, some peace that even you need. I picked you some songs that tracks that vibe.",
+    sad: "AOI: Hmm some low music. I picked you some songs that tracks that vibe.",
+    angry: "AOI: I hope it wasn't a boss battle that did this.. I picked you some songs that tracks that vibe.",
+    tired: "AOI: Feeling tired.. here some songs I recommend for you.",
+    happy: "AOI: Joy want a magical tune. Here's some songs just for you."
+};
+
 // Hook up AI button
 if (moodBtn) {
   moodBtn.addEventListener("click", () => {
@@ -374,9 +418,9 @@ if (moodBtn) {
 
     const picks = recommendSongs(mood);
     updateRecButtonsWithAI(picks);
-
+    // Update coded for better UI responses
     if (aoiMessage) {
-      aoiMessage.textContent = `AOI: Detected "${mood}" — I picked 3 songs that match.`;
+      aoiMessage.textContent = moodMessages[mood] || "AOI: I found some songs I think you might enjoy!";
     }
   });
 }
