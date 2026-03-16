@@ -56,7 +56,9 @@ March 6th, 2026
 Today several small improvements were made to the Powler Player project.
 Improved the song search system so the search bar can better match songs from the music list.
 Updated how song titles are displayed so the .mp3 file extension no longer appears to the user.
-3/11/26 – 3/15/2026
+
+
+March: 3/11/26 – 3/15/2026
 Looked into AI recommendation system for Powler Player and felt the system technically worked but felt too random. Even though the AI was matching moods using certain keys and energy levels... It didn’t feel very personal. Because of that I am improving the AI response system making it more natural instead of only showing mood was detected. In addition, I am implementing visual feature for  Powler Player art designs.
 •	Created a new musicImages folder to store display art for songs.
 •	Connected images to correct songs (one image looking into)
