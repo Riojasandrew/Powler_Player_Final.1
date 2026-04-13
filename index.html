@@ -35,6 +35,8 @@
             <!-- Connects text to the input when user uses search bar -->
             <label for="search">Search music</label>
             <input type="search" id="search" placeholder="Search Song">
+            <!--Update a way to search songs-->
+            <div id="search_results"></div>
         
             <!-- Recommended Songs -->
             <!-- rec is just a call ID for javascript -->
@@ -47,9 +49,9 @@
             <!-- display to the user song time -->
              <div>
                 <!--span: styling inside a text/sentence -->
-                <span id="current_time">0.00</span>
+                <span id="current_time">0:00</span>
                 <input type="range" id="seek_bar" min="0" max="100" value="0">
-                <span id="duration_time">0.00</span>
+                <span id="duration_time">0:00</span>
              </div>
 
             <!--Music Audio Control-->
@@ -60,20 +62,21 @@
             <p id="now_playing">Now Playing: </p>
             <p id="mood_status">Mood: Tell me</p>
             <!-- Creating a AI Mood Input for user -->
-             <lable for="mood_input">What's on your mind today?</lable>
+             <label for="mood_input">What's on your mind today?</label>
              <!--Get users mood information-->
              <input type="text" id="mood_input" placeholder="Ex: hyped, sad, stressed, chill">
              <button id= "mood_btn">Get AI Recommendation</button>
              <p id="aoi_message">AOI: Tell me your mood and I'll recommend songs for you.</p>
+            
+            <button id="prev_btn">⏮</button>
             <button id="play_btn">Play</button>
             <button id="pause_btn">Pause</button>
+            <button id="next_btn">⏭</button>
 
             <!-- Volume adjustment and Mute display to user-->
             <button id="mute_btn">Mute/Volume</button>
             <!-- Shuffle, Next, Previous button display -->
             <button id="shuffle_btn">Shuffle</button>
-            <button id="prev_btn">⏮</button>
-            <button id="next_btn">⏭</button>
             
 
             <button id="library_btn">Library</button>
@@ -81,6 +84,28 @@
             <label for="volume_adjustment">Volume</label>
             <input type="range" id="volume_adjustment" min="0" max="100" value="75">
             <audio id="audio_player"></audio>
+
+
+            <!---------------------------------------------------------------------->
+            <!-- CHAT BOT FOR USER -->
+             <!--Design by Reddie (AI ICON)-->
+             <!--March 30th small update-->
+             <a href="https://www.flaticon.com/free-icons/ai-assistant" title="ai assistant icons">Ai assistant icons created by Reddie - Flaticon</a>
+            <button id="chat_bubble_AOI">
+                <img id="ai-assistant" src="images/ai-assistant.png" alt="AI Chat">
+            </button>
+
+            <!--April 2nd Update CHAT BOT APPEAR-->
+            <div id="aoi_chat_box">
+                <div id="chat_dialog"></div>
+                <div id="chat_enter_message">
+                    <input type="text" id="chat_enter" placeholder="Let's take about your mood...">
+                    <button id="send_btn">Send</button>
+                </div>
+            </div>
+
+            <!-------------------------------------------------------------------->
+
 
             <!-- Theme picker -->
             <!-- Gives the users choice to pick they want -->
@@ -127,6 +152,9 @@
         <!-- Footer Content -->
          <!-- This is the copyright notice -->
         <p>&copy; 2026 Powler Player</p>
+        <a href="https://www.flaticon.com/free-icons/ai-assistant">
+            Icon credit goes to: Reddie (Flaticon)
+        </a>
      </footer>
 
          <!-- This is just the link for the javascript file -->

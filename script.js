@@ -43,7 +43,7 @@ const recButtons = [
 // Update added images to music being displayed 
 // replaced old version with new still pulling from file
 const songs = [
-  { file: "Error_ You.mp3", image: "bright_star.png", moods: ["sad", "calm", "tired"], energy: 2 },
+  { file: "Error_ You.mp3", image: "robotic_women.png", moods: ["sad", "calm", "tired"], energy: 2 },
   { file: "Funk and Gone.mp3", image: "forget_peace.png", moods: ["happy", "chill", "fun"], energy: 3 },
   { file: "Final Fight.mp3", image: "FinalBattle.png", moods: ["hype", "focus", "angry"], energy: 5 },
   { file: "Beneath the Falling Sky.mp3", image: "falling_sky.png", moods: ["calm", "focus"], energy: 3 },
@@ -84,6 +84,11 @@ function loadThenPlay(filename){
     // Change song image when new song plays
     if(songDisplay && song){
         songDisplay.src = "musicImages/" + song.image;
+
+        // Update code to add pop animation
+        songDisplay.classList.remove("pop-in");
+        void songDisplay.offsetWidth;
+        songDisplay.classList.add("pop-in");
     }
 
     // Reset UI while loading
@@ -267,6 +272,8 @@ audioPlayer.addEventListener("ended", () => {
 
 /////////////////////////////////////////////////////////////////
 
+
+
 /////////////////////// Audio controls for music player /////////////////////////////
 
 // Mute button to toggle off or on
@@ -309,6 +316,51 @@ muteBtn.addEventListener("click", () => {
     muteBtn.textContent = Muted ? "Unmute" : "Mute";
 });
 
+
+///////////////// Search bar connect to music //////////////////////////
+const searchInput = document.getElementById("search");
+const searchResults = document.getElementById("search_results");
+
+// helps find all matching songs
+// Also, function included to delete recent history
+searchInput.addEventListener("input", () => {
+    const userText = searchInput.value.toLowerCase().trim();
+
+   
+    searchResults.innerHTML = "";
+
+    // If search box is empty, stop here
+    if (userText === "") {
+        return;
+    }
+
+    // Find all matching songs 
+    const matchedSongs = songs.filter(song =>
+        song.file.toLowerCase().includes(userText)
+    );
+
+    // If no songs match print result of "No song found" for user
+    if (matchedSongs.length === 0) {
+        searchResults.textContent = "No song found.";
+        return;
+    }
+
+    // Show each match as a button
+    matchedSongs.forEach(song => {
+        const resultButton = document.createElement("button");
+        resultButton.textContent = song.file.replace(".mp3", "");
+
+        resultButton.addEventListener("click", () => {
+            loadThenPlay(song.file);
+        });
+
+        searchResults.appendChild(resultButton);
+    });
+});
+
+
+//////////////////////////////////////////////////////////////
+
 //////////////////////////// Theme picker controls for music player /////////////////////////////
 
 const themeButtons = document.querySelectorAll("button[data-theme]");
@@ -338,6 +390,9 @@ console.log("Theme buttons:", themeButtons.length);
 const moodInput = document.getElementById("mood_input");
 const moodBtn = document.getElementById("mood_btn");
 const aoiMessage = document.getElementById("aoi_message");
+// Pop up css box for AOI //
+const chatBox = document.getElementById("aoi_chat_box")
+const chatBubble = document.getElementById("chat_bubble_AOI");
 
 // Turns user text into a mood matching keyword
 function typeMood(text) {
@@ -359,6 +414,7 @@ function typeMood(text) {
   // IF their isn't a keyword match -> defaults to calm
   return "calm";
 }
+
 // Generates 3 song recommendatoins 
 // Mood tag for AI recommandatoin
 function recommendSongs(targetMood) {
@@ -400,14 +456,43 @@ function updateRecButtonsWithAI(indexes) {
 
 // Update messages are less random and more personal
 // Given user a explanation why it picked the song for user
+// Old response system placed with a more humaniod reply for user
 const moodMessages = {
-    hype: "AOI: You appeared to be hyped! I picked you some songs that tracks that vibe!",
-    focus: "AOI: It appears you are wanting be in a focus mood so, I picked you some songs that tracks that vibe!",
-    calm: "AOI: Ah yes, some peace that even you need. I picked you some songs that tracks that vibe.",
-    sad: "AOI: Hmm some low music. I picked you some songs that tracks that vibe.",
-    angry: "AOI: I hope it wasn't a boss battle that did this.. I picked you some songs that tracks that vibe.",
-    tired: "AOI: Feeling tired.. here some songs I recommend for you.",
-    happy: "AOI: Joy want a magical tune. Here's some songs just for you."
+    hype: [
+      "AOI: Ahhh! I guess it's time for us to get serious don't you think!",
+      "AOI: Let's get it!!!",
+      "AOI: Guess we're gonna take this seriously now!"
+    ],
+    focus: [
+      "AOI: I think I can help you find a way to stay focused.",
+      "AOI: Trying to keep your mind occupied I got you!",
+      "AOI: HMMM let's get that wonderful mind focused!"
+    ],
+    calm: [
+      "AOI: A cool headed mind is a great mind. Here you go!",
+      "AOI: Let's find you a song that will guide your journey.",
+      "AOI: Calm I think I got the songs for you.."
+    ],
+    sad: [
+      "AOI: Aww sorry you a feeling down. Here's some songs.. Hope you feel better.",
+      "AOI: Feeling down today I'm sorry. Here's some songs for you. Hope it gets better.",
+      "AOI: Here's a some songs for you. Get better soon I'll be here for you!"
+    ],
+    angry: [
+      "AOI: Please don't be angry at me. So, here's some songs for you.",
+      "AOI: Alright let's get this party start!",
+      "AOI: Yeah I understand your feeling so, let's show them!"
+    ],
+    tired: [
+      "AOI: Hey.. um sounds like you've had  a long day. Let me slow things down for you. I've got something calm ready.",
+      "AOI: Sounds like you are pretty drained. Let me recommend a song for you.",
+      "AOI: Let's take it easy right now. I've got something calm for you."
+    ],
+    happy: [
+      "AOI: Glad you are feeling joy! I'm giving you these songs to listen to!",
+      "AOI: YAY! Let's keep filling up that joy!",
+      "AOI: Let's keep this joy train moving!!"
+    ]
 };
 
 // Hook up AI button
@@ -418,12 +503,80 @@ if (moodBtn) {
 
     const picks = recommendSongs(mood);
     updateRecButtonsWithAI(picks);
+
     // Update coded for better UI responses
+    // Get the list of messages for the detected mood
+    // In case it's can't find reponses than this will default to message for user
+    const messages = moodMessages[mood] || ["AOI: I found some songs I think you might enjoy!"];
+
+    // Pick one random message so AOI feels less repetitive
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    const randomMessage = messages[randomIndex];
+
     if (aoiMessage) {
-      aoiMessage.textContent = moodMessages[mood] || "AOI: I found some songs I think you might enjoy!";
+      aoiMessage.textContent = randomMessage;
     }
   });
 }
+
+// Funciton for AI assistant pop up box
+// Update March 31st
+// This will open and close AOI chat box
+if (chatBubble && chatBox){
+    chatBubble.addEventListener("click", () => {
+        chatBox.classList.toggle("active");
+    });
+}
+////////////////////////// Update April 2nd CHAT BOX AI ASSISTANT ////////////////////
+const chatInput = document.getElementById("chat_enter");
+const sendBtn = document.getElementById("send_btn");
+const chatDialog = document.getElementById("chat_dialog");
+
+function addMessage(text, sender){
+    const dia = document.createElement("p");
+
+    // If you are adding a message than print
+    if (sender === "user"){
+        dia.textContent = "You: " + text;
+    }
+    // else AOI is sending print
+    else{
+        dia.textContent = "AOI: " + text;
+    }
+
+    chatDialog.appendChild(dia);
+
+    // This will help scrolling for message exchanged
+    chatDialog.scrollTop = chatDialog.scrollHeight;
+}
+
+/////////////////////////// Update April 3rd to the 5th mood system for AI assistance chat box ////////////////////
+sendBtn.addEventListener("click", () => {
+    const userText = chatInput.value.trim();
+
+    if (userText === "") return;
+
+    // message will appear for user
+    addMessage(userText, "user");
+
+    const mood = typeMood (userText);
+    const dialogs = moodMessages[mood] || ["I think I found something for you!"];
+    const randomReply = dialogs[Math.floor(Math.random() * dialogs.length)];
+
+    addMessage(randomReply, "aoi");
+
+    const picks = recommendSongs(mood);
+    updateRecButtonsWithAI(picks);
+
+    // Update April 8th 
+    if (picks.length > 0){
+        currentSongIndex = picks[0];
+        loadThenPlay(songs[currentSongIndex].file);
+    }
+
+    chatInput.value = "";
+
+});
 
 // Make sure it goes through a check to be sure the elements are being grabbed
 // This will help from errors showing up often
